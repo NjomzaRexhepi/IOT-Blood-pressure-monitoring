@@ -74,7 +74,7 @@ class Program
             {
                 if (doctors.TryGetValue(patient.Doctor, out string doctorPhone))
                 {
-                    if(patient.Systolic >= 160 || patient.Diastolic >= 100)
+                    if (patient.Systolic >= 160 || patient.Diastolic >= 100)
                         SendSMS(patient.Doctor, doctorPhone, message);
                 }
                 else
@@ -115,38 +115,40 @@ class Program
                 serialPort.Close();
             }
 
-        } catch(Exception ex)
+        }
+        catch (Exception ex)
         {
 
         }
-}
-
-class Patient
-{
-    public string Name { get; }
-    public int RoomNumber { get; }
-    public string Doctor { get; }
-    public int Systolic { get; private set; }
-    public int Diastolic { get; private set; }
-
-    private static Random random = new Random();
-
-    public Patient(string name, int roomNumber, string doctor)
-    {
-        Name = name;
-        RoomNumber = roomNumber;
-        Doctor = doctor;
     }
 
-    // Method to generate random blood pressure
-    public void MeasureBloodPressure()
+    class Patient
     {
-        Systolic = random.Next(85, 190);  // Random systolic value between 85 and 190
-        Diastolic = random.Next(55, 115); // Random diastolic value between 55 and 115
-    }
+        public string Name { get; }
+        public int RoomNumber { get; }
+        public string Doctor { get; }
+        public int Systolic { get; private set; }
+        public int Diastolic { get; private set; }
 
-    public override string ToString()
-    {
-        return $"Pacienti: {Name}, Dhome: {RoomNumber}, Doktori: {Doctor}, Tensioni: {Systolic}/{Diastolic} mmHg";
+        private static Random random = new Random();
+
+        public Patient(string name, int roomNumber, string doctor)
+        {
+            Name = name;
+            RoomNumber = roomNumber;
+            Doctor = doctor;
+        }
+
+        // Method to generate random blood pressure
+        public void MeasureBloodPressure()
+        {
+            Systolic = random.Next(85, 190);  // Random systolic value between 85 and 190
+            Diastolic = random.Next(55, 115); // Random diastolic value between 55 and 115
+        }
+
+        public override string ToString()
+        {
+            return $"Pacienti: {Name}, Dhome: {RoomNumber}, Doktori: {Doctor}, Tensioni: {Systolic}/{Diastolic} mmHg";
+        }
     }
 }
