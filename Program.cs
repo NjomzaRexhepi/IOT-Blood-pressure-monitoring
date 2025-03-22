@@ -5,6 +5,16 @@ class Program
 {
     static void Main()
     {
+        // Lista e doktorëve me numrat e telefonit
+        Dictionary<string, string> doctors = new Dictionary<string, string>
+        {
+            { "Dr. Besnik Kelmendi", "+38349400984" },
+            { "Dr. Arta Krasniqi", "+38349111222" },
+            { "Dr. Mentor Sadiku", "+38344123457" },
+            { "Dr. Valon Dervishi", "+38344123458" },
+            { "Dr. Ilir Kastrati", "+38344123459" }
+        };
+
         // Lista statike e pacientëve
         List<Patient> patients = new List<Patient>
         {
@@ -25,7 +35,6 @@ class Program
             new Patient("Granit Morina", 102, "Dr. Ilir Kastrati")
         };
 
-
         // Simulimi i matjeve për secilin pacient
         foreach (var patient in patients)
         {
@@ -33,32 +42,36 @@ class Program
             Console.WriteLine(patient);
 
             // Dërgo SMS bazuar në klasifikimin e tensionit të gjakut
+            string message = null;
+
             if (patient.Systolic >= 180 || patient.Diastolic >= 110)
-            {
-                SendSMS(patient.Name, "Hypertensive Emergency! Kërko ndihmë mjekësore menjëherë!");
-            }
+                message = $"Hypertensive Emergency! {patient.Name} ka tension shumë të lartë!";
             else if (patient.Systolic >= 160 || patient.Diastolic >= 100)
-            {
-                SendSMS(patient.Name, "Moderate Hypertension! Këshillohet konsultë me doktorin.");
-            }
+                message = $"Moderate Hypertension! {patient.Name} ka nevojë për vlerësim mjekësor.";
             else if (patient.Systolic >= 140 || patient.Diastolic >= 90)
-            {
-                SendSMS(patient.Name, "Mild Hypertension! Kujdes me dietën dhe aktivitetin.");
-            }
+                message = $"Mild Hypertension! {patient.Name} ka tension të lartë, këshillohet kujdes.";
             else if (patient.Systolic >= 130 || patient.Diastolic >= 85)
-            {
-                SendSMS(patient.Name, "High Normal Blood Pressure! Mbaj një stil jetese të shëndetshëm.");
-            }
+                message = $"High Normal Blood Pressure! {patient.Name} duhet të monitorohet.";
             else if (patient.Systolic < 90 || patient.Diastolic < 60)
+                message = $"Low Blood Pressure! {patient.Name} ka presion të ulët.";
+
+            if (message != null)
             {
-                SendSMS(patient.Name, "Low Blood Pressure! Kujdes, mund të kesh simptoma si marramendje.");
+                if (doctors.TryGetValue(patient.Doctor, out string doctorPhone))
+                {
+                    SendSMS(patient.Doctor, doctorPhone, message);
+                }
+                else
+                {
+                    Console.WriteLine($"[Gabim] Nuk u gjet numri i telefonit për {patient.Doctor}");
+                }
             }
         }
     }
 
-    static void SendSMS(string patientName, string message)
+    static void SendSMS(string doctorName, string doctorPhone, string message)
     {
-        Console.WriteLine($"[SMS] Dërgohet tek {patientName}: {message}");
+        Console.WriteLine($"[SMS] Dërgohet tek {doctorName} ({doctorPhone}): {message}\n");
     }
 }
 
@@ -81,8 +94,8 @@ class Patient
 
     public void MeasureBloodPressure()
     {
-        Systolic = random.Next(85, 180);  // Vlera e rastësishme për systolic (85-180)
-        Diastolic = random.Next(55, 110); // Vlera e rastësishme për diastolic (55-110)
+        Systolic = random.Next(85, 190);  // Vlera e rastësishme për systolic (85-190)
+        Diastolic = random.Next(55, 115); // Vlera e rastësishme për diastolic (55-115)
     }
 
     public override string ToString()
