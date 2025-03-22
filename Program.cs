@@ -9,10 +9,10 @@ class Program
         Dictionary<string, string> doctors = new Dictionary<string, string>
         {
             { "Dr. Besnik Kelmendi", "+38349400984" },
-            { "Dr. Arta Krasniqi", "+38349111222" },
-            { "Dr. Mentor Sadiku", "+38344123457" },
-            { "Dr. Valon Dervishi", "+38344123458" },
-            { "Dr. Ilir Kastrati", "+38344123459" }
+            { "Dr. Arta Krasniqi", "+38349302740" },
+            { "Dr. Mentor Sadiku", "+38344510848" },
+            { "Dr. Valon Dervishi", "+38349111111" },
+            { "Dr. Ilir Kastrati", "+38344121212" }
         };
 
         // Lista statike e pacientëve
