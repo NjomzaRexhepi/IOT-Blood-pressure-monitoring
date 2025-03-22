@@ -9,18 +9,18 @@ class Program
         new Patient("Arben Hoxha", 101, "Dr. Besnik Kelmendi"),
         new Patient("Elira Berisha", 102, "Dr. Arta Krasniqi"),
         new Patient("Luan Gashi", 101, "Dr. Mentor Sadiku"),
-        new Patient("Blerim Krasniqi", 104, "Dr. Valon Dervishi"),
-        new Patient("Alma Sadiku", 102, "Dr. Ilir Kastrati"),
+        new Patient("Blerim Krasniqi", 104, "Dr. Arta Krasniqi"),
+        new Patient("Alma Sadiku", 102, "Dr. Besnik Kelmendi"),
         new Patient("Driton Shala", 104, "Dr. Besnik Kelmendi"),
         new Patient("Gentiana Zeka", 103, "Dr. Arta Krasniqi"),
         new Patient("Florent Rexhepi", 103, "Dr. Mentor Sadiku"),
-        new Patient("Arian Salihu", 103, "Dr. Valon Dervishi"),
-        new Patient("Leonora Thaçi", 104, "Dr. Ilir Kastrati"),
+        new Patient("Arian Salihu", 103, "Dr. Arta Krasniqi"),
+        new Patient("Leonora Thaçi", 104, "Dr. Besnik Kelmendi"),
         new Patient("Shpend Ramadani", 102, "Dr. Besnik Kelmendi"),
         new Patient("Fatmire Leka", 105, "Dr. Arta Krasniqi"),
         new Patient("Visar Hoti", 104, "Dr. Mentor Sadiku"),
-        new Patient("Rina Begu", 103, "Dr. Valon Dervishi"),
-        new Patient("Granit Morina", 102, "Dr. Ilir Kastrati")
+        new Patient("Rina Begu", 103, "Dr. Arta Krasniqi"),
+        new Patient("Granit Morina", 102, "Dr. Besnik Kelmendi")
     };
 
     static Dictionary<string, string> doctors = new Dictionary<string, string>
