@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Threading;
 
 class Program
@@ -88,7 +89,36 @@ class Program
     static void SendSMS(string doctorName, string doctorPhone, string message)
     {
         Console.WriteLine($"[SMS] Dërgohet tek {doctorName} ({doctorPhone}): {message}\n");
-    }
+
+        string portName = "COM3"; // Ndrysho sipas portit të modemit
+        int baudRate = 9600;      // Shumica e modemeve përdorin 9600 baud
+
+        try
+        {
+            using (SerialPort serialPort = new SerialPort(portName, baudRate, Parity.None, 8, StopBits.One))
+            {
+                serialPort.Open();
+
+                // Vendos modemin në mënyrën për të dërguar SMS
+                serialPort.WriteLine("AT+CMGF=1\r");
+                System.Threading.Thread.Sleep(1000); // Prit pak për përgjigjen
+
+                // Dërgo komandën për të caktuar marrësin
+                serialPort.WriteLine($"AT+CMGS=\"{doctorPhone}\"\r");
+                System.Threading.Thread.Sleep(1000); // Prit për përgjigje
+
+                // Dërgo mesazhin dhe shenjën Ctrl+Z për të përfunduar
+                serialPort.WriteLine(message + "\x1A");
+                System.Threading.Thread.Sleep(3000); // Prit për konfirmimin e dërgimit
+
+                Console.WriteLine("Mesazhi u dërgua me sukses!");
+                serialPort.Close();
+            }
+
+        } catch(Exception ex)
+        {
+
+        }
 }
 
 class Patient
