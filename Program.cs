@@ -52,14 +52,15 @@ class Program
                 message = $"Mild Hypertension! {patient.Name} ka tension të lartë, këshillohet kujdes.";
             else if (patient.Systolic >= 130 || patient.Diastolic >= 85)
                 message = $"High Normal Blood Pressure! {patient.Name} duhet të monitorohet.";
-            else if (patient.Systolic < 90 || patient.Diastolic < 60)
-                message = $"Low Blood Pressure! {patient.Name} ka presion të ulët.";
+            else if (patient.Systolic < 130 && patient.Diastolic < 85)
+                message = $"Normal Blood Pressure! {patient.Name} ka presion të ulët.";
 
             if (message != null)
             {
                 if (doctors.TryGetValue(patient.Doctor, out string doctorPhone))
                 {
-                    SendSMS(patient.Doctor, doctorPhone, message);
+                    if(patient.Systolic > 160 && patient.Diastolic > 100)
+                        SendSMS(patient.Doctor, doctorPhone, message);
                 }
                 else
                 {
