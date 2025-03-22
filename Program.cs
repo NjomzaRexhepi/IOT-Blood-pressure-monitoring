@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Ports;
 using System.Threading;
 
 class Program
@@ -27,7 +26,7 @@ class Program
     static Dictionary<string, string> doctors = new Dictionary<string, string>
     {
         { "Dr. Besnik Kelmendi", "+38349400984" },
-        { "Dr. Arta Krasniqi", "+38345302740" },
+        { "Dr. Arta Krasniqi", "+38349302740" },
         { "Dr. Mentor Sadiku", "+38344510848" }
     };
 
@@ -74,7 +73,7 @@ class Program
             {
                 if (doctors.TryGetValue(patient.Doctor, out string doctorPhone))
                 {
-                    if (patient.Systolic > 160 || patient.Diastolic > 100)
+                    if(patient.Systolic >= 160 || patient.Diastolic >= 100)
                         SendSMS(patient.Doctor, doctorPhone, message);
                 }
                 else
@@ -89,65 +88,35 @@ class Program
     static void SendSMS(string doctorName, string doctorPhone, string message)
     {
         Console.WriteLine($"[SMS] Dërgohet tek {doctorName} ({doctorPhone}): {message}\n");
+    }
+}
 
-        string portName = "COM3"; // Ndrysho sipas portit të modemit
-        int baudRate = 9600;      // Shumica e modemeve përdorin 9600 baud
+class Patient
+{
+    public string Name { get; }
+    public int RoomNumber { get; }
+    public string Doctor { get; }
+    public int Systolic { get; private set; }
+    public int Diastolic { get; private set; }
 
-        try
-        {
-            using (SerialPort serialPort = new SerialPort(portName, baudRate, Parity.None, 8, StopBits.One))
-            {
-                serialPort.Open();
+    private static Random random = new Random();
 
-                // Vendos modemin në mënyrën për të dërguar SMS
-                serialPort.WriteLine("AT+CMGF=1\r");
-                System.Threading.Thread.Sleep(1000); // Prit pak për përgjigjen
-
-                // Dërgo komandën për të caktuar marrësin
-                serialPort.WriteLine($"AT+CMGS=\"{doctorPhone}\"\r");
-                System.Threading.Thread.Sleep(1000); // Prit për përgjigje
-
-                // Dërgo mesazhin dhe shenjën Ctrl+Z për të përfunduar
-                serialPort.WriteLine(message + "\x1A");
-                System.Threading.Thread.Sleep(3000); // Prit për konfirmimin e dërgimit
-
-                Console.WriteLine("Mesazhi u dërgua me sukses!");
-                serialPort.Close();
-            }
-        }
-        catch (Exception ex)
-        {
-
-        }
+    public Patient(string name, int roomNumber, string doctor)
+    {
+        Name = name;
+        RoomNumber = roomNumber;
+        Doctor = doctor;
     }
 
-    class Patient
+    // Method to generate random blood pressure
+    public void MeasureBloodPressure()
     {
-        public string Name { get; }
-        public int RoomNumber { get; }
-        public string Doctor { get; }
-        public int Systolic { get; private set; }
-        public int Diastolic { get; private set; }
+        Systolic = random.Next(85, 190);  // Random systolic value between 85 and 190
+        Diastolic = random.Next(55, 115); // Random diastolic value between 55 and 115
+    }
 
-        private static Random random = new Random();
-
-        public Patient(string name, int roomNumber, string doctor)
-        {
-            Name = name;
-            RoomNumber = roomNumber;
-            Doctor = doctor;
-        }
-
-        // Method to generate random blood pressure
-        public void MeasureBloodPressure()
-        {
-            Systolic = random.Next(85, 190);  // Random systolic value between 85 and 190
-            Diastolic = random.Next(55, 115); // Random diastolic value between 55 and 115
-        }
-
-        public override string ToString()
-        {
-            return $"Pacienti: {Name}, Dhome: {RoomNumber}, Doktori: {Doctor}, Tensioni: {Systolic}/{Diastolic} mmHg";
-        }
+    public override string ToString()
+    {
+        return $"Pacienti: {Name}, Dhome: {RoomNumber}, Doktori: {Doctor}, Tensioni: {Systolic}/{Diastolic} mmHg";
     }
 }
