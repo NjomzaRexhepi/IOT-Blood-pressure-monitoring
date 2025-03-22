@@ -40,7 +40,7 @@ class Program
         }
 
         // Set up a timer to generate new blood pressure every 5 minutes (300000 ms)
-        Timer timer = new Timer(GenerateNewBloodPressure, null, 0, 300000);  // 5 minutes = 300,000 ms
+        Timer timer = new Timer(GenerateNewBloodPressure, null, 0, 3000);  // 5 minutes = 300,000 ms
 
         // Keep the application running to allow the timer to work
         Console.WriteLine("Press any key to exit...");
