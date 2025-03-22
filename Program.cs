@@ -5,7 +5,6 @@ class Program
 {
     static void Main()
     {
-        // Lista statike e pacientëve
         List<Patient> patients = new List<Patient>
         {
             new Patient("Arben Hoxha", 101, "Dr. Besnik Kelmendi"),
@@ -26,13 +25,11 @@ class Program
         };
 
 
-        // Simulimi i matjeve për secilin pacient
         foreach (var patient in patients)
         {
             patient.MeasureBloodPressure();
             Console.WriteLine(patient);
 
-            // Dërgo SMS bazuar në klasifikimin e tensionit të gjakut
             if (patient.Systolic >= 180 || patient.Diastolic >= 110)
             {
                 SendSMS(patient.Name, "Hypertensive Emergency! Kërko ndihmë mjekësore menjëherë!");
@@ -81,8 +78,8 @@ class Patient
 
     public void MeasureBloodPressure()
     {
-        Systolic = random.Next(85, 180);  // Vlera e rastësishme për systolic (85-180)
-        Diastolic = random.Next(55, 110); // Vlera e rastësishme për diastolic (55-110)
+        Systolic = random.Next(85, 180);  
+        Diastolic = random.Next(55, 110); 
     }
 
     public override string ToString()
