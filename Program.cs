@@ -75,7 +75,7 @@ class Program
             {
                 if (doctors.TryGetValue(patient.Doctor, out string doctorPhone))
                 {
-                    if (patient.Systolic > 160 && patient.Diastolic > 100)
+                    if(patient.Systolic > 160 || patient.Diastolic > 100)
                         SendSMS(patient.Doctor, doctorPhone, message);
                 }
                 else
