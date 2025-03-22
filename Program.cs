@@ -27,9 +27,7 @@ class Program
     {
         { "Dr. Besnik Kelmendi", "+38349400984" },
         { "Dr. Arta Krasniqi", "+38349302740" },
-        { "Dr. Mentor Sadiku", "+38344510848" },
-        { "Dr. Valon Dervishi", "+38349111111" },
-        { "Dr. Ilir Kastrati", "+38344121212" }
+        { "Dr. Mentor Sadiku", "+38344510848" }
     };
 
     static void Main()
